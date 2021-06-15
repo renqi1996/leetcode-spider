@@ -46,7 +46,7 @@ const formatId = (id) => {
 const leveToStr = (level) => {
     switch (level) {
         case 1: 
-            return '<font color="#00dd00">Easy</font>';
+            return 'Easy';
         case 2: 
             return 'Medium';
         case 3: 
@@ -158,7 +158,10 @@ const generateMarkdown = async (resultList, leetcodeNumObj, outputDir, templateP
         medium: mediumNum,
         easy: easyNum,
         time: getTimeStr('yyyy-MM-dd hh:mm'),
-        solutions: solutions
+        solutions: solutions,
+        difficultyFn: (text) => {
+            return "<font color=red>" + text + "</font>"
+        }
     };
 
     console.log('viewData:', viewData);
