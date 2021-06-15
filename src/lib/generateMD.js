@@ -46,7 +46,7 @@ const formatId = (id) => {
 const leveToStr = (level) => {
     switch (level) {
         case 1: 
-            return 'Easy';
+            return '<font color="#00dd00">Easy</font>';
         case 2: 
             return 'Medium';
         case 3: 
