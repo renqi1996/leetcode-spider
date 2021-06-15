@@ -157,7 +157,7 @@ const generateMarkdown = async (resultList, leetcodeNumObj, outputDir, templateP
         hard: hardNum,
         medium: mediumNum,
         easy: easyNum,
-        time: getTimeStr('yyyy-MM-dd'),
+        time: getTimeStr('yyyy-MM-dd hh:mm'),
         solutions: solutions
     };
 

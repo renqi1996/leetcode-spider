@@ -36,6 +36,13 @@ const generateMarkdown = require('./generateMD').generateMarkdown;
         solved: JSON.parse(data).num_solved,
         locked: 0,
     };
+    let locked = 0;
+    lists.forEach((item) => {
+        if (item.paid_only) {
+            locked ++;
+        }
+    });
+    leetcodeNumObj.locked = locked;
     await generateMarkdown(lists, leetcodeNumObj, config.outputDir, config.template);
     await browser.close();
 })();
