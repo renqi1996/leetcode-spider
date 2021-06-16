@@ -11,15 +11,16 @@ const Mustache = require('mustache');
  */
 const readAndcopyTpl = async function (libTplPath, localTplPath) {
     let tpl;
-    try {
-        // 获取本地 Tpl 模板文件数据
-        await fs.statSync(localTplPath);
-        tpl = await fs.readFileSync(localTplPath, 'utf-8');
-    } catch (e) {
-        // 当本地无 md 模板文件时，读取 libTpl，并复制到本地 localTpl 中
-        tpl = await fs.readFileSync(libTplPath, 'utf-8');
-        await fs.writeFileSync(localTplPath, tpl);
-    }
+    // try {
+    //     // 获取本地 Tpl 模板文件数据
+    //     await fs.statSync(localTplPath);
+    //     tpl = await fs.readFileSync(localTplPath, 'utf-8');
+    // } catch (e) {
+    //     // 当本地无 md 模板文件时，读取 libTpl，并复制到本地 localTpl 中
+    //     tpl = await fs.readFileSync(libTplPath, 'utf-8');
+    //     await fs.writeFileSync(localTplPath, tpl);
+    // }
+    tpl = await fs.readFileSync(libTplPath, 'utf-8');
     return tpl;
 };
 
@@ -110,7 +111,7 @@ const generateMarkdown = async (resultList, leetcodeNumObj, outputDir, templateP
         let solutionLinks = ``; // 题解链接
         
         // 拼接得到该题题解本地链接
-        solutionLinks += ` (./${outputDir}/${item.stat.question_id}.${item.stat.question__title}/${item.stat.question__title}})`
+        solutionLinks += ` (./${outputDir}/${item.stat.question_id}.${item.stat.question__title}/${item.stat.question__title})`
 
         // console.log('solutionLinks: ', solutionLinks);
 

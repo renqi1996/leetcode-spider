@@ -4,7 +4,7 @@ const log = console.log;
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
-const ensureDirExists = require('./utils/ensureDirExists');
+const ensureDirExists = require('./utils/ensureDirExists').ensureDirExists;
 const generateMarkdown = require('./generateMD').generateMarkdown;
 
 (async () => {
@@ -31,6 +31,9 @@ const generateMarkdown = require('./generateMD').generateMarkdown;
         template: './README.tpl',
         outputDir: './solutions',
     };
+
+    ensureDirExists(path.resolve(process.cwd(), config.outputDir))
+
     const leetcodeNumObj = {
         total: JSON.parse(data).num_total,
         solved: JSON.parse(data).num_solved,
@@ -43,6 +46,7 @@ const generateMarkdown = require('./generateMD').generateMarkdown;
         }
     });
     leetcodeNumObj.locked = locked;
+
     await generateMarkdown(lists, leetcodeNumObj, config.outputDir, config.template);
     await browser.close();
 })();

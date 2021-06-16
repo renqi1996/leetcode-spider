@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ensureDirExists = (dirName) => {
-    if (fs.existsSync(dirname)) {
+    if (fs.existsSync(dirName)) {
         return true
     }
     ensureDirExists(path.dirname(dirName));
