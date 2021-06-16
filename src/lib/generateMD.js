@@ -111,7 +111,8 @@ const generateMarkdown = async (resultList, leetcodeNumObj, outputDir, templateP
         let solutionLinks = ``; // 题解链接
         
         // 拼接得到该题题解本地链接
-        solutionLinks += ` (./${outputDir}/${item.stat.question_id}.${item.stat.question__title}/${item.stat.question__title})`
+        // solutionLinks += ` (./${outputDir}/${item.stat.question_id}.${item.stat.question__title}/${item.stat.question__title})`
+        solutionLinks += ` (./${outputDir}/demo.md)`
 
         // console.log('solutionLinks: ', solutionLinks);
 
