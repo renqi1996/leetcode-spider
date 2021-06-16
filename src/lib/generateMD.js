@@ -101,9 +101,6 @@ const generateMarkdown = async (resultList, leetcodeNumObj, outputDir, templateP
     let hardNum = 0; // 对应难度数目
     let easyNum = 0; // 对应难度数目
     let mediumNum = 0; // 对应难度数目
-    // let problemNumbers = Object.keys(resultObj).map(key => +key).filter(key => {
-    //     return !isNaN(key)
-    // }).sort();
 
     let solutions = [];
 
@@ -115,7 +112,7 @@ const generateMarkdown = async (resultList, leetcodeNumObj, outputDir, templateP
         // 拼接得到该题题解本地链接
         solutionLinks += ` (./${outputDir}/${item.stat.question_id}.${item.stat.question__title}/${item.stat.question__title}})`
 
-        console.log('solutionLinks: ', solutionLinks);
+        // console.log('solutionLinks: ', solutionLinks);
 
         // 统计不同难度题目数目
         let difficulty = leveToStr(item.difficulty.level);
@@ -139,8 +136,9 @@ const generateMarkdown = async (resultList, leetcodeNumObj, outputDir, templateP
             slug: item.stat.question__article__slug,
             solutionLinks,
             difficulty,
-            paidOnly: !item.paidOnly ? ':heavy_check_mark:' : '',
-            // acceptance: resultObj[id].acceptance
+            paidOnly: item.paidOnly ? ':heavy_check_mark:' : '',
+            status: item.status === 'ac' ? ':heavy_check_mark:' : '',
+            acceptance: (item.stat.total_acs / item.stat.total_submitted * 100).toFixed(2) + '%' ,
         });
     });
 
@@ -160,8 +158,6 @@ const generateMarkdown = async (resultList, leetcodeNumObj, outputDir, templateP
         time: getTimeStr('yyyy-MM-dd hh:mm'),
         solutions: solutions,
     };
-
-    console.log('viewData:', viewData);
 
     let readmeContent = Mustache.render(tpl, viewData);
     await fs.writeFileSync(path.resolve(process.cwd(), 'README.md'), readmeContent);

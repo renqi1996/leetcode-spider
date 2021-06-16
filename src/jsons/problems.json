@@ -11255,7 +11255,7 @@
         "frontend_question_id": 1343,
         "is_new_question": false
       },
-      "status": null,
+      "status": "ac",
       "difficulty": { "level": 2 },
       "paid_only": false,
       "is_favor": false,
