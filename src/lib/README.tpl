@@ -17,5 +17,5 @@
 | # | Problems | Solutions | Difficulty | Acceptance | Paid-Only
 |:--:|:-----:|:---------:|:----:|:----:|:----:|
 {{#solutions}}
-|{{id}}|[{{title}}](https://leetcode.com/problems/{{slug}}/)|{{solutionLinks}}|{{#difficultyFn}}{{difficulty}}{{/difficultyFn}}|{{acceptance}}[:memo:]|{{paidOnly}}|
+|{{id}}|[{{title}}](https://leetcode.com/problems/{{slug}}/)|{{solutionLinks}}|{{difficulty}}|{{acceptance}}|{{paidOnly}}|
 {{/solutions}}

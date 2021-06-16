@@ -139,7 +139,7 @@ const generateMarkdown = async (resultList, leetcodeNumObj, outputDir, templateP
             slug: item.stat.question__article__slug,
             solutionLinks,
             difficulty,
-            // paidOnly: resultObj[id].paidOnly ? ':heavy_check_mark:' : '',
+            paidOnly: !item.paidOnly ? ':heavy_check_mark:' : '',
             // acceptance: resultObj[id].acceptance
         });
     });
@@ -159,9 +159,6 @@ const generateMarkdown = async (resultList, leetcodeNumObj, outputDir, templateP
         easy: easyNum,
         time: getTimeStr('yyyy-MM-dd hh:mm'),
         solutions: solutions,
-        difficultyFn: (text) => {
-            return "<font color=red>" + text + "</font>"
-        }
     };
 
     console.log('viewData:', viewData);
