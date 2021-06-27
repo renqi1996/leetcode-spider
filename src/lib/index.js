@@ -1,52 +1,50 @@
-const puppeteer = require('puppeteer');
-const chalk = require('chalk');
-const log = console.log;
-const https = require('https');
 const fs = require('fs');
 const path = require('path');
-const ensureDirExists = require('./utils/ensureDirExists').ensureDirExists;
+const chalk = require('chalk');
+const inquirer = require('inquirer');
+const figlet = require('figlet');
+const { clear } = require('console');
+const log = console.log;
+const initByCLiQA = require('./inquirer').initByCLiQA;
+const formatTime = require('./utils/tools').formatTime;
+const https = require('https');
+const puppeteer = require('puppeteer');
+const ora = require('ora');
+const spider = require('./spider').spider;
 const generateMarkdown = require('./generateMD').generateMarkdown;
 
-(async () => {
-    const browser = await puppeteer.launch({
-        headless: false
-    });
-    const page = await browser.newPage();
-    await page.goto('https://leetcode.com/problemset/all/');
-    // 爬取当前所有题目数据
-    // await https.get('https://leetcode.com/api/problems/all/', res => {
-    //     let resData = '';    
-    //     res.on('data', data => {
-    //         resData += data;
-    //     });
-    //     res.on('end', () => {
-    //         fs.writeFileSync('../jsons/problems.json',resData);
-    //     })
-    // });
-    // 读取数据，并取出其中题目数组
-    const data = await fs.readFileSync(path.resolve(__dirname, '../jsons/problems.json'), 'utf-8');
-    const lists = JSON.parse(data).stat_status_pairs;
-    console.log('lists: ', lists.length);
-    const config = {
-        template: './README.tpl',
-        outputDir: './solutions',
+const questions = initByCLiQA();
+
+async function main () {
+  // 清空控制台
+  await clear();
+
+  // 打印 logo
+  await log(chalk.yellowBright(figlet.textSync('LeetCode Spider', { horizontalLayout: 'full' })));
+
+  const questions = initByCLiQA();
+
+  let answers = await inquirer.prompt(questions);
+
+  // 更新 config.json
+  if (answers.ifUpdate) {
+    const updateTime = formatTime('yyyy-MM-dd hh:mm:ss');
+
+    answers = {
+      ...answers,
+      ...updateTime
     };
 
-    ensureDirExists(path.resolve(process.cwd(), config.outputDir))
+    await fs.writeFileSync(path.resolve('./src/jsons/config.json'), JSON.stringify(answers, null, '  '));
+  }
 
-    const leetcodeNumObj = {
-        total: JSON.parse(data).num_total,
-        solved: JSON.parse(data).num_solved,
-        locked: 0,
-    };
-    let locked = 0;
-    lists.forEach((item) => {
-        if (item.paid_only) {
-            locked ++;
-        }
-    });
-    leetcodeNumObj.locked = locked;
+  // 爬取所有题目数据，并写入 src/jsons/problems
+  await spider();
 
-    await generateMarkdown(lists, leetcodeNumObj, config.outputDir, config.template);
-    await browser.close();
-})();
+  // 生成 README.md 并生成题解 md 文件
+  await generateMarkdown('./solutions', './README.tpl');
+
+  process.exit();
+}
+
+main();

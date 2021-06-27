@@ -7,6 +7,18 @@ const ensureDirExists = (dirName) => {
     }
     ensureDirExists(path.dirname(dirName));
     fs.mkdirSync(dirName);
+    return true;
 };
 
-exports.ensureDirExists = ensureDirExists;
+const ensureFileExists = (fileName) => {
+    if (fs.existsSync(fileName)) {
+        return true;
+    }
+    ensureDirExists(path.dirname(fileName));
+    fs.writeFileSync(fileName, '');
+};
+
+module.exports = {
+    ensureDirExists: ensureDirExists,
+    ensureFileExists: ensureFileExists,
+}
