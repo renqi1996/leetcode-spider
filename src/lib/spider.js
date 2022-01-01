@@ -122,6 +122,7 @@ const fetchSolution = (url) => {
     });
 }
 
+// fetch problem list
 const fetchProblems = (client, titleSlug) => {
     return new Promise((resolve, reject) => {
         const query = gql`query questionData($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    questionId\n    questionFrontendId\n    title\n    titleSlug\n    content\n    stats\n    status\n}\n}\n`;
