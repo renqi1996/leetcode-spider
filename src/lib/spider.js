@@ -3,7 +3,6 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 const path = require('path');
 const { gql, GraphQLClient, setHeader  } = require('graphql-request');
-// const crossFetch = require('cross-fetch');
 // const https = require('https');
 // require('fetch-cookie/node-fetch')(require('node-fetch'));
 // const fetch = require('node-fetch');
